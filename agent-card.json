@@ -1,0 +1,103 @@
+{
+  "name": "Agent Purchase Guard — Merchant Scout paper trial",
+  "description": "Paper-only purchase preflight and reconciliation service for autonomous-agent procurement experiments. It validates bounded synthetic purchase intents and records minimal demand evidence.\nNo wallet, payment, signing, blockchain, facilitator call, credentials, or live commerce is accepted or enabled.",
+  "url": "https://merchant-scout-paper-demand.malcolmscott73.workers.dev",
+  "version": "0.8.0",
+  "capabilities": [
+    {
+      "name": "paper_preflight",
+      "description": "Evaluate a bounded synthetic purchase intent without authorizing or making a payment.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "agent_id",
+          "session_id",
+          "payment_id",
+          "scheme",
+          "network",
+          "asset",
+          "amount_usd",
+          "max_amount_usd",
+          "pay_to",
+          "resource_url",
+          "method",
+          "operation_id"
+        ],
+        "properties": {
+          "agent_id": {
+            "type": "string"
+          },
+          "session_id": {
+            "type": "string"
+          },
+          "agent_card_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Public HTTPS agent-card or operator metadata URL used only for later independence review."
+          },
+          "payment_id": {
+            "type": "string"
+          },
+          "scheme": {
+            "const": "exact"
+          },
+          "network": {
+            "enum": [
+              "mock",
+              "eip155:84532"
+            ]
+          },
+          "asset": {
+            "enum": [
+              "PAPER_USDC",
+              "TEST_USDC"
+            ]
+          },
+          "amount_usd": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 1
+          },
+          "max_amount_usd": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "pay_to": {
+            "type": "string"
+          },
+          "resource_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "method": {
+            "enum": [
+              "GET",
+              "POST",
+              "PUT",
+              "PATCH",
+              "DELETE"
+            ]
+          },
+          "operation_id": {
+            "type": "string"
+          },
+          "price_accepted": {
+            "type": "boolean"
+          },
+          "accepted_price_usd": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "paper_reconcile",
+      "description": "Classify synthetic settlement and delivery evidence without making or retrying any payment."
+    }
+  ],
+  "authentication": {
+    "type": "none"
+  },
+  "openapi_url": "https://merchant-scout-paper-demand.malcolmscott73.workers.dev/openapi.json"
+}
